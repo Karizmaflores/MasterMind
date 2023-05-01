@@ -11,12 +11,14 @@ let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
+// function printBoard prints board to screen
 const printBoard = () =>  {
   for (let i = 0; i < board.length; i++) {
     console.log(board[i]);
   }
 }
 
+// function generateSolution creates a random combination of 4 letters from a-h to serve as a game solution
 const generateSolution = () =>  {
   for (let i = 0; i < 4; i++) {
     const randomIndex = getRandomInt(0, letters.length);
@@ -28,10 +30,11 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+// function generateHint matches user guess to correct positions or letters of solution
 const generateHint = (guess) =>  {
   let solutionArray = solution.split('');
   let guessArray = guess.split('');
-  let correctLetterLocations = 0;
+  let correctLetterLocations = 0; //solutionArray.filter......
   for (let i = 0; i < solutionArray.length; i++) {
     if (solutionArray[i] === guessArray[i]) {
       correctLetterLocations++;
@@ -50,14 +53,17 @@ const generateHint = (guess) =>  {
   return `${correctLetterLocations}-${correctLetters}`;
 }
 
+// function mastermind checks for user win if guess is equal to solution
 const mastermind = (guess) => {
  solution = 'abcd'; // Comment this out to generate a random solution
-  if (guess === solution) {
-    return "You win!";
+  if (solution === guess) {
+    console.log("You guessed it!");
+    return "You guessed it!";
   }
 
+
   const hint = generateHint(guess);
-  board.push('${guess}-${hint}');
+  board.push(`${guess}-${hint}`);
   console.log('Guess: ', guess, 'Hint: ', hint);
 
   if (board.length === 10){
@@ -68,7 +74,7 @@ const mastermind = (guess) => {
   }
 }
 
-
+// function getPrompt displays mastermind game play
 const getPrompt = () =>  {
   rl.question('guess: ', (guess) => {
     mastermind(guess);
